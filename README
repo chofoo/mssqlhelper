@@ -1,87 +1,66 @@
 # nodejs Microsoft SQL Server Helper 
-# nodejsµÄÒ»¸öÓÃÓÚÁ¬½ÓmssqlÊı¾İ¿âµÄ¹¤¾ßÀà
+# nodejsçš„ä¸€ä¸ªç”¨äºè¿æ¥mssqlæ•°æ®åº“çš„å·¥å…·ç±»
 
-## Features ½éÉÜ
+## Features ä»‹ç»
 
- * ²ÉÓÃÎ¢ÈítdsĞ­Òé£¬²»ĞèÒªÈÎºÎC/C++À©Õ¹£¬¿çÆ½Ì¨Ê¹ÓÃ
- * Ö´ĞĞsqlÓï¾ä£¬»ñµÃ½á¹ûĞĞ
- * Ö´ĞĞ´æ´¢¹ı³Ì£¬»ñµÃÊä³ö²ÎÊıÒÔ¼°½á¹ûĞĞ
+ * é‡‡ç”¨å¾®è½¯tdsåè®®ï¼Œä¸éœ€è¦ä»»ä½•C/C++æ‰©å±•ï¼Œè·¨å¹³å°ä½¿ç”¨
+ * æ‰§è¡Œsqlè¯­å¥ï¼Œè·å¾—ç»“æœè¡Œ
+ * æ‰§è¡Œå­˜å‚¨è¿‡ç¨‹ï¼Œè·å¾—è¾“å‡ºå‚æ•°ä»¥åŠç»“æœè¡Œ
 
-## TODO ´ıÊµÏÖÄÚÈİ
+## TODO å¾…å®ç°å†…å®¹
 
- * ½«Ö§³Ö»ñµÃ¶à¸ö½á¹û¼¯£¨Table£©
- * ½«Ö§³ÖÁ¬½Ó³Ø
- * ¸ü¶àĞÔÄÜ¼ÓÇ¿
+ * å°†æ”¯æŒè·å¾—å¤šä¸ªç»“æœé›†ï¼ˆTableï¼‰
+ * å°†æ”¯æŒè¿æ¥æ± 
+ * æ›´å¤šæ€§èƒ½åŠ å¼º
 
-## Requirements ĞèÒªÈçÏÂ×é¼ş£¨ÒÑÄÚÖÃ£©
+## Requirements éœ€è¦å¦‚ä¸‹ç»„ä»¶ï¼ˆå·²å†…ç½®ï¼‰
 
- * [tds](http://cretz.github.com/node-tds/)£¨ÒÑÄÚÖÃ£©
+ * [tds](http://cretz.github.com/node-tds/)ï¼ˆå·²å†…ç½®ï¼‰
 
 
 
-## Use Ê¹ÓÃ
+## Use ä½¿ç”¨
     
     $ git clone git@github.com:play175/mssqlhelper.git
     $ cd mssqlhelper
     $ node test.js
 
-## Test ²âÊÔ´úÂë
+## Test æµ‹è¯•ä»£ç 
 
-var db = require('./index');
+<style type="text/css">
+    pre{font-family:'Courier New' , Monospace; font-size:12px; width:99%; overflow:auto; margin:0 0 1em 0; background:#F7F7F7; } 
+pre ol, pre ol li, pre ol li span{margin:0 0; padding:0; border:none} 
+pre a, pre a:hover{background:none; border:none; padding:0; margin:0} 
+pre ol{list-style:decimal; background:#F7F7F7; margin:0px 0px 1px 3em !important; padding:5px 0; color:#5C5C5C; border-left:3px solid #146B00;} 
+pre ol li{list-style:decimal-leading-zero; list-style-position:outside !important; color:#5C5C5C; padding:0 3px 0 10px !important; margin:0 !important; line-height:1.3em} 
+pre ol li.alt{color:inherit} 
+pre ol li span{color:black; background-color:inherit} 
+pre .comment, pre .comments{color:#008200; background-color:inherit} 
+pre .string{color:blue; background-color:inherit} 
+pre .keyword{color:#069; font-weight:bold; background-color:inherit} 
+pre .preprocessor{color:gray; background-color:inherit} 
+pre .dp-xml .cdata{color:#ff1493} 
+pre .dp-xml .tag, pre .dp-xml .tag-name{color:#069; font-weight:bold} 
+pre .dp-xml .attribute{color:red} 
+pre .dp-xml .attribute-value{color:blue} 
+pre .dp-sql .func{color:#ff1493} 
+pre .dp-sql .op{color:#808080} 
+pre .dp-rb .symbol{color:#a70} 
+pre .dp-rb .variable{color:#a70; font-weight:bold} 
+pre .dp-py .builtins{color:#ff1493} 
+pre .dp-py .magicmethods{color:#808080} 
+pre .dp-py .exceptions{color:brown} 
+pre .dp-py .types{color:brown; font-style:italic} 
+pre .dp-py .commonlibs{color:#8A2BE2; font-style:italic} 
+pre .dp-j .annotation{color:#646464} 
+pre .dp-j .number{color:#C00000} 
+pre .dp-delphi .number{color:blue} 
+pre .dp-delphi .directive{color:#008284} 
+pre .dp-delphi .vars{color:#000} 
+pre .dp-css .value{color:black} 
+pre .dp-css .important{color:red} 
+pre .dp-c .vars{color:#d00} 
+pre .dp-cpp .datatypes{color:#2E8B57; font-weight:bold} 
+  </style>
 
-db.config({
-	host: '192.168.1.100'
-	,port: 1433
-	,userName: 'sa'
-	,password: '123'
-	,database:'testdb'
-});
-
-//test query sql Ö´ĞĞsql
-
-db.query(
-	'select @Param1 Param1,@Param2 Param2'
-	,{
-		 Param1: { type : 'NVarChar', size: 7,value : 'myvalue' }
-		 ,Param2: { type : 'Int',value : 321 }
-	}
-	,function(res){
-		if(res.err)throw new Error('database error:'+res.err.msg);
-		var rows = res.tables[0].rows;
-		for (var i = 0; i < rows.length; i++) {
-			console.log(rows[i].getValue(0),rows[i].getValue('Param2'));
-		}
-	}
-);
-
-//test excute sp Ö´ĞĞ´æ´¢¹ı³Ì
-
-db.exec(
-	'test_sp'
-	,{
-		 Param1: {direction:'out', type : 'NVarChar', size: 50,value : 'my Param1 value' }
-		 ,Param2: { type : 'Int',value : 123 }
-		 ,Param3: {direction:'out', type : 'VarChar', size: 50,value : '789' }
-	}
-	,function(res){
-		if(res.err)throw new Error('database error:'+res.err.msg);
-
-		//get output paramater value
-		console.log('output @Param1='+res.params.Param1.value);
-
-		//get rows
-		var rows = res.tables[0].rows;
-		for (var i = 0; i < rows.length; i++) {
-			var rp = '';
-			for(var j=0,len = rows[i].metadata.columns.length;j<len;j++){
-				var col = rows[i].metadata.columns[j];
-				rp += ' ' +(rows[i].getValue(j));
-			}
-			console.log(rp);
-		}
-	}
-);
-
-
- 
-
+<pre><ol class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;db&nbsp;=&nbsp;require(</span><span class="string">'./index'</span><span>);&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>db.config({&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;host:&nbsp;<span class="string">'192.168.1.100'</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;,port:&nbsp;1433&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;,userName:&nbsp;<span class="string">'sa'</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;,password:&nbsp;<span class="string">'123'</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;,database:<span class="string">'testdb'</span><span>&nbsp;</span></span></li><li class="alt"><span>});&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span><span class="comment">//test&nbsp;query&nbsp;sql&nbsp;æ‰§è¡Œsql</span><span>&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>db.query(&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'select&nbsp;@Param1&nbsp;Param1,@Param2&nbsp;Param2'</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;,{&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Param1:&nbsp;{&nbsp;type&nbsp;:&nbsp;<span class="string">'NVarChar'</span><span>,&nbsp;size:&nbsp;7,value&nbsp;:&nbsp;</span><span class="string">'myvalue'</span><span>&nbsp;}&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,Param2:&nbsp;{&nbsp;type&nbsp;:&nbsp;<span class="string">'Int'</span><span>,value&nbsp;:&nbsp;321&nbsp;}&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;,<span class="keyword">function</span><span>(res){&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(res.err)</span><span class="keyword">throw</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;Error(</span><span class="string">'database&nbsp;error:'</span><span>+res.err.msg);&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span><span>&nbsp;rows&nbsp;=&nbsp;res.tables[0].rows;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">var</span><span>&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;rows.length;&nbsp;i++)&nbsp;{&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(rows[i].getValue(0),rows[i].getValue(<span class="string">'Param2'</span><span>));&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</span></li><li><span>);&nbsp;</span></li><li class="alt"><span>&nbsp;</span></li><li><span><span class="comment">//test&nbsp;excute&nbsp;sp&nbsp;æ‰§è¡Œå­˜å‚¨è¿‡ç¨‹</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;</span></li><li><span>db.exec(&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'test_sp'</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;,{&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Param1:&nbsp;{direction:<span class="string">'out'</span><span>,&nbsp;type&nbsp;:&nbsp;</span><span class="string">'NVarChar'</span><span>,&nbsp;size:&nbsp;50,value&nbsp;:&nbsp;</span><span class="string">'my&nbsp;Param1&nbsp;value'</span><span>&nbsp;}&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,Param2:&nbsp;{&nbsp;type&nbsp;:&nbsp;<span class="string">'Int'</span><span>,value&nbsp;:&nbsp;123&nbsp;}&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,Param3:&nbsp;{direction:<span class="string">'out'</span><span>,&nbsp;type&nbsp;:&nbsp;</span><span class="string">'VarChar'</span><span>,&nbsp;size:&nbsp;50,value&nbsp;:&nbsp;</span><span class="string">'789'</span><span>&nbsp;}&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;,<span class="keyword">function</span><span>(res){&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(res.err)</span><span class="keyword">throw</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;Error(</span><span class="string">'database&nbsp;error:'</span><span>+res.err.msg);&nbsp;</span></span></li><li class="alt"><span>&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//get&nbsp;output&nbsp;paramater&nbsp;value</span><span>&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(<span class="string">'output&nbsp;@Param1='</span><span>+res.params.Param1.value);&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//get&nbsp;rows</span><span>&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span><span>&nbsp;rows&nbsp;=&nbsp;res.tables[0].rows;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">var</span><span>&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;rows.length;&nbsp;i++)&nbsp;{&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span><span>&nbsp;rp&nbsp;=&nbsp;</span><span class="string">''</span><span>;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>(</span><span class="keyword">var</span><span>&nbsp;j=0,len&nbsp;=&nbsp;rows[i].metadata.columns.length;j&lt;len;j++){&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span><span>&nbsp;col&nbsp;=&nbsp;rows[i].metadata.columns[j];&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rp&nbsp;+=&nbsp;<span class="string">'&nbsp;'</span><span>&nbsp;+(rows[i].getValue(j));&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(rp);&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</span></li><li><span>);&nbsp;</span></li></ol></pre>
