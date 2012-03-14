@@ -1,0 +1,12 @@
+{ 
+  "name": "mssqlhelper", 
+  "version": "0.1", 
+  "description": "Microsoft SQL Server Helper", 
+  "keywords": ["mssql", "Helper", "Microsoft SQL Server", "SQLHelper"], 
+  "author": [
+    "yoyo<mvpsoft@gmail.com> (http://yoyo.play175.com)"
+  ], 
+  "main": "index.js", 
+  "dependencies": { 
+  }
+}
